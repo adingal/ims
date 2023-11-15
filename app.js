@@ -1,6 +1,7 @@
 const path = require('path')
 const express = require('express')
 const morgan = require('morgan')
+const userRouter = require('./routes/userRoutes')
 
 // App
 const app = express()
@@ -15,5 +16,8 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 // Parse incoming request to JSON
 app.use(express.json({ limit: '10kb' }))
+
+// Routes
+app.use('/api/v1/users', userRouter)
 
 module.exports = app
