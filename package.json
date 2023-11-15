@@ -1,0 +1,20 @@
+{
+  "name": "ims-be",
+  "version": "1.0.0",
+  "description": "A backend for inventory management system built with NodeJs, ExpressJs, MongoDB and Mongoose.",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "prod": "SET NODE_ENV=production & nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodejs",
+    "expressjs",
+    "mongodb",
+    "mongoose",
+    "inventory"
+  ],
+  "author": "Alex Dingal",
+  "license": "ISC"
+}
