@@ -2,6 +2,8 @@ const path = require('path')
 const express = require('express')
 const morgan = require('morgan')
 const userRouter = require('./routes/userRoutes')
+const AppError = require('./utils/appError')
+const globalErrorHandler = require('./controllers/errorController')
 
 // App
 const app = express()
@@ -19,5 +21,13 @@ app.use(express.json({ limit: '10kb' }))
 
 // Routes
 app.use('/api/v1/users', userRouter)
+
+// Catch all route handler
+app.all('*', (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404))
+})
+
+// Global error handling
+app.use(globalErrorHandler)
 
 module.exports = app

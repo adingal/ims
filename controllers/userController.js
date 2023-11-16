@@ -1,100 +1,66 @@
 const User = require('../models/userModel')
+const catchAsync = require('../utils/catchAsync')
 const { requestStatus } = require('../constants')
 
-const { SUCCESS, FAILED } = requestStatus
+const { SUCCESS } = requestStatus
 
-exports.getAllUsers = async (req, res, next) => {
-  try {
-    const users = await User.find()
+exports.getAllUsers = catchAsync(async (req, res, next) => {
+  const users = await User.find()
 
-    res.status(200).json({
-      status: SUCCESS,
-      results: users.length,
-      data: { users },
-    })
-  } catch (err) {
-    res.status(404).json({
-      status: FAILED,
-      message: err,
-    })
-  }
-}
+  res.status(200).json({
+    status: SUCCESS,
+    results: users.length,
+    data: { users },
+  })
+})
 
-exports.getUser = async (req, res, next) => {
-  try {
-    const user = await User.findById(req.params.id)
+exports.getUser = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.params.id)
 
-    res.status(200).json({
-      status: SUCCESS,
-      data: { user },
-    })
-  } catch (err) {
-    res.status(404).json({
-      status: FAILED,
-      message: err,
-    })
-  }
-}
+  res.status(200).json({
+    status: SUCCESS,
+    data: { user },
+  })
+})
 
-exports.createUser = async (req, res, next) => {
-  try {
-    const { name, email, password, passwordConfirm, role } = req.body
-    const newUser = await User.create({
-      name,
-      email,
-      password,
-      passwordConfirm,
-      role,
-    })
+exports.createUser = catchAsync(async (req, res, next) => {
+  const { name, email, password, passwordConfirm, role } = req.body
+  const newUser = await User.create({
+    name,
+    email,
+    password,
+    passwordConfirm,
+    role,
+  })
 
-    res.status(201).json({
-      status: SUCCESS,
-      data: { user: newUser },
-    })
-  } catch (err) {
-    res.status(404).json({
-      status: FAILED,
-      message: err,
-    })
-  }
-}
+  res.status(201).json({
+    status: SUCCESS,
+    data: { user: newUser },
+  })
+})
 
-exports.updateUser = async (req, res, next) => {
-  try {
-    const { name, email, role, active } = req.body
-    const user = await User.findByIdAndUpdate(
-      req.params.id,
-      { name, email, role, active },
-      {
-        new: true,
-        runValidators: true,
-      },
-    )
+exports.updateUser = catchAsync(async (req, res, next) => {
+  const { name, email, role, active } = req.body
+  const user = await User.findByIdAndUpdate(
+    req.params.id,
+    { name, email, role, active },
+    {
+      new: true,
+      runValidators: true,
+    },
+  )
 
-    res.status(200).json({
-      status: SUCCESS,
-      data: { user },
-    })
-  } catch (err) {
-    res.status(404).json({
-      status: FAILED,
-      message: err,
-    })
-  }
-}
+  res.status(200).json({
+    status: SUCCESS,
+    data: { user },
+  })
+})
 
-exports.deleteUser = async (req, res, next) => {
-  try {
-    await User.findByIdAndDelete(req.params.id)
+exports.deleteUser = catchAsync(async (req, res, next) => {
+  await User.findByIdAndDelete(req.params.id)
 
-    res.status(204).json({
-      status: SUCCESS,
-      data: null,
-    })
-  } catch (err) {
-    res.status(404).json({
-      status: FAILED,
-      message: err,
-    })
-  }
-}
+  res.status(204).json({
+    status: SUCCESS,
+    data: null,
+  })
+})
