@@ -1,5 +1,4 @@
-exports.status = {
+exports.requestStatus = {
   SUCCESS: 'success',
   FAILED: 'failed',
-  ERROR: 'error',
 }
