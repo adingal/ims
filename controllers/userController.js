@@ -33,6 +33,8 @@ exports.createUser = catchAsync(async (req, res, next) => {
     role,
   })
 
+  newUser.password = undefined
+
   res.status(201).json({
     status: SUCCESS,
     data: { user: newUser },
