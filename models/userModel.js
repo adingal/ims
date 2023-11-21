@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
+const bcrypt = require('bcrypt')
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -49,6 +50,26 @@ const userSchema = new mongoose.Schema({
     select: false,
   },
 })
+
+userSchema.pre('save', async function (next) {
+  // Check if password is not modified
+  if (!this.isModified('password')) return next()
+
+  // If modified, encrypt and add a salt with length of 12
+  this.password = await bcrypt.hash(this.password, 12)
+
+  // Delete the passwordConfirm field before saving in DB
+  // Only required in request body
+  this.passwordConfirm = undefined
+  next()
+})
+
+userSchema.methods.correctPassword = async function (
+  candidatePassword,
+  userPassword,
+) {
+  return await bcrypt.compare(candidatePassword, userPassword)
+}
 
 const User = mongoose.model('User', userSchema)
 
