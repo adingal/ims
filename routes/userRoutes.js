@@ -7,10 +7,21 @@ const {
   deleteUser,
 } = require('../controllers/userController')
 
+const { login, protect, restrictTo } = require('../controllers/authController')
+
 const router = express.Router()
 
-router.route('/').get(getAllUsers).post(createUser)
+router.post('/login', login)
 
-router.route('/:id').get(getUser).patch(updateUser).delete(deleteUser)
+router
+  .route('/')
+  .get(getAllUsers)
+  .post(protect, restrictTo('admin'), createUser)
+
+router
+  .route('/:id')
+  .get(getUser)
+  .patch(protect, restrictTo('admin'), updateUser)
+  .delete(protect, restrictTo('admin'), deleteUser)
 
 module.exports = router
