@@ -2,6 +2,7 @@ const path = require('path')
 const express = require('express')
 const morgan = require('morgan')
 const userRouter = require('./routes/userRoutes')
+const loadBoardRouter = require('./routes/loadBoardRoutes')
 const AppError = require('./utils/appError')
 const globalErrorHandler = require('./controllers/errorController')
 
@@ -21,6 +22,7 @@ app.use(express.json({ limit: '10kb' }))
 
 // Routes
 app.use('/api/v1/users', userRouter)
+app.use('/api/v1/loadboards', loadBoardRouter)
 
 // Catch all route handler
 app.all('*', (req, res, next) => {
