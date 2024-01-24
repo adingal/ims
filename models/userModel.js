@@ -44,7 +44,6 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
-  // Hide version key
   __v: {
     type: Number,
     select: false,

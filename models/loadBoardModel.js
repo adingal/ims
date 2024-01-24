@@ -50,6 +50,10 @@ const loadBoardSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
+  __v: {
+    type: Number,
+    select: false,
+  },
 })
 
 const LoadBoard = mongoose.model('LoadBoard', loadBoardSchema)
