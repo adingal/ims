@@ -43,6 +43,7 @@ exports.updateLoadBoard = catchAsync(async (req, res, next) => {
   const updatedLoadBoard = await LoadBoard.findByIdAndUpdate(
     req.params.id,
     {
+      serialNo,
       location,
       active,
       status,
