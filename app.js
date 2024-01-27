@@ -4,7 +4,6 @@ const morgan = require('morgan')
 const userRouter = require('./routes/userRoutes')
 const loadBoardRouter = require('./routes/loadBoardRoutes')
 const historyRouter = require('./routes/historyRoutes')
-const updateRouter = require('./routes/updateRoutes')
 const AppError = require('./utils/appError')
 const globalErrorHandler = require('./controllers/errorController')
 
