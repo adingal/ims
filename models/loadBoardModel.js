@@ -6,6 +6,7 @@ const loadBoardSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please enter serial number.'],
     unique: true,
+    uppercase: true,
     maxLength: [4, 'A board name must have 4 characters.'],
     minLength: [4, 'A board name must have 4 characters.'],
   },
